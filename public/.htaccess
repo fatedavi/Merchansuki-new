@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1️⃣ IZINKAN FILE & FOLDER ASLI (STATIC FILE)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 2️⃣ BARU SEMUA LAIN MASUK index.php
+RewriteRule ^(.+)$ index.php?url=$1 [L]

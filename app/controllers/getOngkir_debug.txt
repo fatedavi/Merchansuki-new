@@ -1,0 +1,30 @@
+POST city: Array
+(
+    [city] => Malang
+)
+
+Ongkir: 900
+POST city: Array
+(
+    [city] => Malang
+)
+
+Ongkir: 900
+POST city: Array
+(
+    [city] => Malang
+)
+
+Ongkir: 900
+POST city: Array
+(
+    [city] => Surabaya
+)
+
+Ongkir: 0
+POST city: Array
+(
+    [city] => Jogja
+)
+
+Ongkir: 18000
