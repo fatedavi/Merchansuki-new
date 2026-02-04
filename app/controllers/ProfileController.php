@@ -104,4 +104,24 @@ class ProfileController extends Controller
         }
         exit;
     }
+
+    /**
+     * Tampilkan riwayat pesanan user
+     */
+    public function orders()
+    {
+        $this->requireLogin();
+
+        $userId = $_SESSION['user']['id'];
+        $userModel = $this->model('User');
+        $orderModel = $this->model('Order');
+
+        $user = $userModel->findById($userId);
+        $orders = $orderModel->getByUser($userId);
+
+        $this->view('profile/orders', [
+            'user'   => $user,
+            'orders' => $orders
+        ]);
+    }
 }

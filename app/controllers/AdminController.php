@@ -58,6 +58,24 @@ public function dashboard()
 
 
 
+
+    /**
+     * 📦 Manajemen Order
+     */
+    public function orders()
+    {
+        $this->ensureAdmin();
+
+        $orders = $this->model('Order')->getAll();
+
+        $data = [
+            'title'  => 'Manajemen Order',
+            'orders' => $orders
+        ];
+
+        $this->view('admin/orders', $data);
+    }
+
     /**
      * 👤 Manajemen User
      */

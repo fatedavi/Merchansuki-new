@@ -26,37 +26,12 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6; /* Gray-100 */
+            color: #1f2937; /* Gray-800 */
         }
 
-        .gradient-bg {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
-        }
-
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .glow-effect {
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
-        }
-
-        .glow-effect:hover {
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.8);
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #1e1b4b;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(to bottom, #8b5cf6, #a78bfa);
-            border-radius: 10px;
+        .slide-in {
+            animation: slideIn 0.5s ease-out forwards;
         }
 
         @keyframes slideIn {
@@ -64,67 +39,55 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .slide-in {
-            animation: slideIn 0.5s ease-out forwards;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .pulse-animation {
-            animation: pulse 2s ease-in-out infinite;
-        }
-
         .stat-card {
             transition: all 0.3s ease;
         }
-
+        
         .stat-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
 
         .menu-card {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .menu-card:hover {
-            transform: translateY(-5px) scale(1.02);
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body class="gradient-bg min-h-screen text-white">
+<body class="min-h-screen">
 
     <!-- HEADER -->
-    <header class="sticky top-0 z-50 glass-effect border-b border-purple-500/30 shadow-lg">
+    <header class="bg-white sticky top-0 z-50 border-b border-gray-200 shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 py-4">
             <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
                 <!-- Logo & Title -->
                 <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center glow-effect">
-                        <i class="fas fa-crown text-white text-xl"></i>
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white shadow">
+                        <i class="fas fa-crown text-lg"></i>
                     </div>
                     <div>
-                        <h1 class="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        <h1 class="text-xl sm:text-2xl font-bold text-gray-900">
                             Admin Dashboard
                         </h1>
-                        <p class="text-purple-300 text-xs sm:text-sm">Merchansuki Management</p>
                     </div>
                 </div>
 
                 <!-- User Info & Logout -->
                 <div class="flex items-center gap-3 sm:gap-4">
-                    <div class="glass-effect px-4 py-2 rounded-full flex items-center gap-2">
-                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                            <i class="fas fa-user text-white text-sm"></i>
+                    <div class="px-3 py-1.5 rounded-full bg-gray-100 border border-gray-200 flex items-center gap-2">
+                        <div class="w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-sm border border-gray-100 text-purple-600">
+                            <i class="fas fa-user text-xs"></i>
                         </div>
-                        <span class="text-purple-200 text-sm font-medium hidden sm:inline">
+                        <span class="text-gray-600 text-sm font-medium hidden sm:inline">
                             <?= htmlspecialchars($adminName) ?>
                         </span>
                     </div>
                     <a href="/auth/logout"
-                       class="bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 glow-effect flex items-center gap-2">
+                       class="bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 border border-red-100 px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-2">
                         <i class="fas fa-sign-out-alt"></i>
                         <span class="hidden sm:inline">Logout</span>
                     </a>
@@ -134,22 +97,22 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="container mx-auto px-4 sm:px-6 py-8 lg:py-12">
+    <main class="container mx-auto px-4 sm:px-6 py-8 lg:py-10">
 
         <!-- Welcome Section -->
-        <div class="glass-effect rounded-2xl p-6 sm:p-8 mb-8 lg:mb-10 slide-in border border-purple-500/30">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 mb-8 lg:mb-10 slide-in border border-gray-200 shadow-sm">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold mb-2">
-                        Welcome back, <span class="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"><?= htmlspecialchars($adminName) ?></span>! 👋
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">
+                        Welcome back, <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600"><?= htmlspecialchars($adminName) ?></span>! 👋
                     </h2>
-                    <p class="text-purple-200 text-sm sm:text-base">
+                    <p class="text-gray-500 text-sm sm:text-base">
                         Kelola seluruh operasional Merchansuki dari sini
                     </p>
                 </div>
-                <div class="flex items-center gap-2 text-purple-300">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span class="text-sm"><?= date('d M Y') ?></span>
+                <div class="flex items-center gap-2 text-gray-500 bg-gray-50 px-4 py-2 rounded-lg border border-gray-100">
+                    <i class="fas fa-calendar-alt text-purple-500"></i>
+                    <span class="text-sm font-medium"><?= date('d M Y') ?></span>
                 </div>
             </div>
         </div>
@@ -158,62 +121,47 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 lg:mb-10">
 
             <!-- Total Produk -->
-            <div class="stat-card glass-effect rounded-xl sm:rounded-2xl p-6 border border-purple-500/30 slide-in" style="animation-delay: 0.1s;">
+            <div class="stat-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm slide-in" style="animation-delay: 0.1s;">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center glow-effect">
-                        <i class="fas fa-box text-white text-2xl sm:text-3xl"></i>
+                    <div class="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600">
+                        <i class="fas fa-box text-2xl"></i>
                     </div>
                     <div class="text-right">
-                        <p class="text-purple-300 text-xs sm:text-sm mb-1">Total Produk</p>
-                        <p class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        <p class="text-gray-400 text-xs uppercase font-bold tracking-wider mb-1">Total Produk</p>
+                        <p class="text-3xl font-black text-gray-900">
                             <?= count($products) ?>
                         </p>
                     </div>
                 </div>
-                
+                <div class="w-full bg-gray-100 rounded-full h-1.5">
+                    <div class="bg-purple-500 h-1.5 rounded-full" style="width: 70%"></div>
+                </div>
             </div>
 
             <!-- Total User -->
-            <div class="stat-card glass-effect rounded-xl sm:rounded-2xl p-6 border border-purple-500/30 slide-in" style="animation-delay: 0.2s;">
+            <div class="stat-card bg-white rounded-xl p-6 border border-gray-200 shadow-sm slide-in" style="animation-delay: 0.2s;">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center glow-effect">
-                        <i class="fas fa-users text-white text-2xl sm:text-3xl"></i>
+                    <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600">
+                        <i class="fas fa-users text-2xl"></i>
                     </div>
                     <div class="text-right">
-                        <p class="text-purple-300 text-xs sm:text-sm mb-1">Total User</p>
-                        <p class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                        <p class="text-gray-400 text-xs uppercase font-bold tracking-wider mb-1">Total User</p>
+                        <p class="text-3xl font-black text-gray-900">
                             <?= count($users) ?>
                         </p>
                     </div>
                 </div>
-                
+                <div class="w-full bg-gray-100 rounded-full h-1.5">
+                    <div class="bg-blue-500 h-1.5 rounded-full" style="width: 45%"></div>
+                </div>
             </div>
-
-            <!-- Total Order -->
-            <!-- <div class="stat-card glass-effect rounded-xl sm:rounded-2xl p-6 border border-purple-500/30 slide-in sm:col-span-2 lg:col-span-1" style="animation-delay: 0.3s;">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center glow-effect">
-                        <i class="fas fa-shopping-cart text-white text-2xl sm:text-3xl"></i>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-purple-300 text-xs sm:text-sm mb-1">Total Order</p>
-                        <p class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                            <?= $totalOrders ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 text-green-400 text-xs sm:text-sm">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>+25% dari bulan lalu</span>
-                </div>
-            </div> -->
 
         </div>
 
         <!-- MENU MANAGEMENT -->
         <div class="mb-6 lg:mb-8">
-            <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-3">
-                <i class="fas fa-th-large text-purple-400"></i>
+            <h3 class="text-xl font-bold mb-4 sm:mb-6 flex items-center gap-3 text-gray-800">
+                <i class="fas fa-th-large text-purple-500"></i>
                 <span>Management Menu</span>
             </h3>
         </div>
@@ -222,17 +170,17 @@
 
             <!-- Kelola Produk -->
             <a href="/admin/products"
-               class="menu-card block glass-effect rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-purple-500/30 hover:border-purple-500/60 transition-all duration-300 group">
+               class="menu-card block bg-white rounded-xl p-6 sm:p-8 border border-gray-200 hover:border-purple-300 transition-all duration-300 group">
                 <div class="flex flex-col items-center text-center space-y-4">
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center glow-effect group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-box-open text-white text-3xl sm:text-4xl"></i>
+                    <div class="w-20 h-20 bg-purple-50 rounded-full flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        <i class="fas fa-box-open text-3xl"></i>
                     </div>
                     <div>
-                        <h4 class="text-lg sm:text-xl font-bold mb-2">Kelola Produk</h4>
-                        <p class="text-purple-300 text-xs sm:text-sm">Manage produk dakimakura & merchandise</p>
+                        <h4 class="text-lg font-bold mb-2 text-gray-900">Kelola Produk</h4>
+                        <p class="text-gray-500 text-sm">Manage produk dakimakura & merchandise</p>
                     </div>
-                    <div class="flex items-center gap-2 text-purple-400 group-hover:text-purple-300 transition-colors">
-                        <span class="text-sm font-semibold">Lihat Detail</span>
+                    <div class="flex items-center gap-2 text-purple-600 font-semibold text-sm group-hover:gap-3 transition-all">
+                        <span>Lihat Detail</span>
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
@@ -240,17 +188,17 @@
 
             <!-- Kelola User -->
             <a href="/admin/users"
-               class="menu-card block glass-effect rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-blue-500/30 hover:border-blue-500/60 transition-all duration-300 group">
+               class="menu-card block bg-white rounded-xl p-6 sm:p-8 border border-gray-200 hover:border-blue-300 transition-all duration-300 group">
                 <div class="flex flex-col items-center text-center space-y-4">
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center glow-effect group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-users-cog text-white text-3xl sm:text-4xl"></i>
+                    <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        <i class="fas fa-users-cog text-3xl"></i>
                     </div>
                     <div>
-                        <h4 class="text-lg sm:text-xl font-bold mb-2">Kelola User</h4>
-                        <p class="text-purple-300 text-xs sm:text-sm">Manage user & customer data</p>
+                        <h4 class="text-lg font-bold mb-2 text-gray-900">Kelola User</h4>
+                        <p class="text-gray-500 text-sm">Manage user & customer data</p>
                     </div>
-                    <div class="flex items-center gap-2 text-blue-400 group-hover:text-blue-300 transition-colors">
-                        <span class="text-sm font-semibold">Lihat Detail</span>
+                    <div class="flex items-center gap-2 text-blue-600 font-semibold text-sm group-hover:gap-3 transition-all">
+                        <span>Lihat Detail</span>
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
@@ -258,17 +206,17 @@
 
             <!-- Kelola Order -->
             <a href="/admin/orders"
-               class="menu-card block glass-effect rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-green-500/30 hover:border-green-500/60 transition-all duration-300 group sm:col-span-2 lg:col-span-1">
+               class="menu-card block bg-white rounded-xl p-6 sm:p-8 border border-gray-200 hover:border-green-300 transition-all duration-300 group sm:col-span-2 lg:col-span-1">
                 <div class="flex flex-col items-center text-center space-y-4">
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center glow-effect group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-receipt text-white text-3xl sm:text-4xl"></i>
+                    <div class="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform duration-300 shadow-sm">
+                        <i class="fas fa-receipt text-3xl"></i>
                     </div>
                     <div>
-                        <h4 class="text-lg sm:text-xl font-bold mb-2">Kelola Order</h4>
-                        <p class="text-purple-300 text-xs sm:text-sm">Manage pesanan & transaksi</p>
+                        <h4 class="text-lg font-bold mb-2 text-gray-900">Kelola Order</h4>
+                        <p class="text-gray-500 text-sm">Manage pesanan & transaksi</p>
                     </div>
-                    <div class="flex items-center gap-2 text-green-400 group-hover:text-green-300 transition-colors">
-                        <span class="text-sm font-semibold">Lihat Detail</span>
+                    <div class="flex items-center gap-2 text-green-600 font-semibold text-sm group-hover:gap-3 transition-all">
+                        <span>Lihat Detail</span>
                         <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
@@ -276,54 +224,13 @@
 
         </div>
 
-        <!-- Quick Actions -->
-        <div class="mt-8 lg:mt-10">
-            <h3 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 flex items-center gap-3">
-                <i class="fas fa-bolt text-yellow-400"></i>
-                <span>Quick Actions</span>
-            </h3>
-            
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-                <a href="/admin/products/add" class="glass-effect rounded-xl p-4 border border-purple-500/30 hover:border-purple-500/60 transition-all text-center group">
-                    <i class="fas fa-plus-circle text-2xl sm:text-3xl text-purple-400 group-hover:scale-110 transition-transform mb-2"></i>
-                    <p class="text-xs sm:text-sm font-medium">Add Product</p>
-                </a>
-                
-                <a href="/admin/categories" class="glass-effect rounded-xl p-4 border border-blue-500/30 hover:border-blue-500/60 transition-all text-center group">
-                    <i class="fas fa-tags text-2xl sm:text-3xl text-blue-400 group-hover:scale-110 transition-transform mb-2"></i>
-                    <p class="text-xs sm:text-sm font-medium">Categories</p>
-                </a>
-                
-                <a href="/admin/reports" class="glass-effect rounded-xl p-4 border border-green-500/30 hover:border-green-500/60 transition-all text-center group">
-                    <i class="fas fa-chart-line text-2xl sm:text-3xl text-green-400 group-hover:scale-110 transition-transform mb-2"></i>
-                    <p class="text-xs sm:text-sm font-medium">Reports</p>
-                </a>
-                
-                <a href="/admin/settings" class="glass-effect rounded-xl p-4 border border-yellow-500/30 hover:border-yellow-500/60 transition-all text-center group">
-                    <i class="fas fa-cog text-2xl sm:text-3xl text-yellow-400 group-hover:scale-110 transition-transform mb-2"></i>
-                    <p class="text-xs sm:text-sm font-medium">Settings</p>
-                </a>
-                
-                <a href="/admin/notifications" class="glass-effect rounded-xl p-4 border border-pink-500/30 hover:border-pink-500/60 transition-all text-center group relative">
-                    <i class="fas fa-bell text-2xl sm:text-3xl text-pink-400 group-hover:scale-110 transition-transform mb-2"></i>
-                    <p class="text-xs sm:text-sm font-medium">Notifications</p>
-                    <span class="absolute top-2 right-2 w-3 h-3 bg-red-500 rounded-full pulse-animation"></span>
-                </a>
-                
-                <a href="/admin/support" class="glass-effect rounded-xl p-4 border border-orange-500/30 hover:border-orange-500/60 transition-all text-center group">
-                    <i class="fas fa-life-ring text-2xl sm:text-3xl text-orange-400 group-hover:scale-110 transition-transform mb-2"></i>
-                    <p class="text-xs sm:text-sm font-medium">Support</p>
-                </a>
-            </div>
-        </div>
-
     </main>
 
     <!-- Footer -->
-    <footer class="glass-effect border-t border-purple-500/30 py-6 mt-12">
+    <footer class="bg-white border-t border-gray-200 py-6 mt-12">
         <div class="container mx-auto px-4 sm:px-6 text-center">
-            <p class="text-purple-200 text-xs sm:text-sm">
-                &copy; 2026 Merchansuki Admin Panel. All rights reserved. Made with <i class="fas fa-heart text-pink-400"></i> for Wibu Community
+            <p class="text-gray-500 text-sm">
+                &copy; 2026 <span class="font-bold text-gray-700">Merchansuki Admin Panel</span>. All rights reserved.
             </p>
         </div>
     </footer>

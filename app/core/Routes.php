@@ -5,6 +5,7 @@ $router = new Router();
 $router->post('admin/users/edit', 'AdminController@edit');
 $router->get('admin/users/delete/{id}', 'AdminController@delete');
 $router->get('admin/users', 'AdminController@users');
+$router->get('admin/orders', 'AdminController@orders');
 
 $router->get('admin/dashboard', 'AdminController@dashboard');
 $router->post('admin/users/add', 'AdminController@store');
@@ -63,6 +64,7 @@ $router->post('cart/clear', 'CartController@clear');
 
 // Routes Profile
 $router->get('profile', 'ProfileController@index');
+$router->get('profile/orders', 'ProfileController@orders');
 $router->get('profile/edit', 'ProfileController@edit');
 $router->post('profile/update', 'ProfileController@update');
 

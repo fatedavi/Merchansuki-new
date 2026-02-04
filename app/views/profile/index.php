@@ -20,10 +20,16 @@
             </span>
             Profile Saya
         </h1>
-        <a href="/profile/edit"
-           class="px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow-md">
-            <i class="fas fa-edit mr-2"></i> Edit Profile
-        </a>
+        <div class="flex gap-2">
+            <a href="/profile/orders"
+               class="px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition shadow-md">
+                <i class="fas fa-shopping-bag mr-2"></i> Riwayat Pesanan
+            </a>
+            <a href="/profile/edit"
+               class="px-4 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition shadow-md">
+                <i class="fas fa-edit mr-2"></i> Edit Profile
+            </a>
+        </div>
     </div>
 
     <!-- Alert jika profile belum lengkap -->

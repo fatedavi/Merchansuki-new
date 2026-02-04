@@ -87,6 +87,20 @@ class Order extends Model
     }
 
     /**
+     * Ambil SEMUA order (untuk Admin)
+     */
+    public function getAll(): array
+    {
+        $this->db->query("
+            SELECT o.*, u.name as user_name, u.email as user_email
+            FROM orders o
+            JOIN users u ON u.id = o.user_id
+            ORDER BY o.created_at DESC
+        ");
+        return $this->db->resultSet();
+    }
+
+    /**
      * Ambil detail order + item
      */
     public function findWithItems(int $orderId): ?array

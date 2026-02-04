@@ -44,6 +44,7 @@ class Cart extends Model
                 'name'         => $product['name'] ?? '',
                 'variant_name' => $variant['variant_name'] ?? '',
                 'price'        => (float) ($variant['price'] ?? 0),
+                'base_price'   => (float) ($variant['price'] ?? 0),
                 'qty'          => 0,
                 'image'        => $variant['image'] ?? null,
             ];
@@ -124,6 +125,8 @@ class Cart extends Model
      */
     protected function recalculate(array &$cart): void
     {
+        $this->applyWholesalePricing($cart);
+
         $totalQty   = 0;
         $totalPrice = 0;
 
@@ -246,20 +249,39 @@ class Cart extends Model
                 'variant_id'   => $vid,
                 'name'         => $row['name'] ?? '',
                 'variant_name' => $row['variant_name'] ?? '',
-                'price'        => $price,
+                'price'        => (float) $row['price'],         // Harga saat ini (bisa harga grosir)
+                'base_price'   => (float) $row['price'],         // Asumsi harga DB adalah base, tapi nanti diaplikasikan ulang
                 'qty'          => $qty,
                 'image'        => $row['image'] ?? null,
             ];
-
-            $totalQty   += $qty;
-            $totalPrice += $qty * $price;
+            
+            // Kita akan recalculate ulang harga berdasarkan master variant price nanti
+            // Idealnya join lagi ke product_variants untuk ambil master price, 
+            // tapi untuk simpilicity kita asumsikan recalculate akan handle.
+        }
+        
+        // 🔥 Perbaiki base_price dari Master Data agar valid
+        if (!empty($items)) {
+            $ids = implode(',', array_keys($items));
+            $this->db->query("SELECT id, price FROM product_variants WHERE id IN ($ids)");
+            $masters = $this->db->resultSet();
+            foreach ($masters as $m) {
+                if (isset($items[$m['id']])) {
+                    $items[$m['id']]['base_price'] = (float) $m['price'];
+                }
+            }
         }
 
-        return [
+        $cart = [
             'items'          => $items,
-            'total_quantity' => $totalQty,
-            'total_price'    => $totalPrice,
+            'total_quantity' => 0,
+            'total_price'    => 0,
         ];
+
+        // Hitung ulang (termasuk aplikasi grosir)
+        $this->recalculate($cart);
+
+        return $cart;
     }
 
     /**
@@ -301,8 +323,62 @@ class Cart extends Model
             $this->db->bind(':product_id', $item['product_id']);
             $this->db->bind(':variant_id', $item['variant_id']);
             $this->db->bind(':qty', $item['qty']);
-            $this->db->bind(':price', $item['price']);
+            // Simpan harga yang sudah diaplikasikan (bisa harga grosir)
+            $this->db->bind(':price', $item['price']); 
             $this->db->execute();
+        }
+    }
+
+    /**
+     * Logika Inti: Cek tabel variant_wholesale_prices
+     */
+    protected function applyWholesalePricing(array &$cart): void
+    {
+        if (empty($cart['items'])) return;
+
+        $variantIds = array_keys($cart['items']);
+        if (empty($variantIds)) return;
+
+        // Ambil semua rule grosir untuk item yg ada di cart
+        $idsStr = implode(',', $variantIds);
+        $this->db->query("
+            SELECT variant_id, min_unit, wholesale_price 
+            FROM variant_wholesale_prices 
+            WHERE variant_id IN ($idsStr) AND status = 'active'
+            ORDER BY min_unit ASC
+        ");
+        $rules = $this->db->resultSet();
+
+        // Grouping rules by variant_id
+        $wholesaleRules = [];
+        foreach ($rules as $rule) {
+            $wholesaleRules[$rule['variant_id']][] = $rule;
+        }
+
+        // Loop setiap item di cart
+        foreach ($cart['items'] as &$item) {
+            $vid       = $item['variant_id'];
+            $qty       = $item['qty'];
+            
+            // Reset ke base_price dulu (default master price)
+            // Jika base_price belum ada (misal dari session lama), fallback ke price
+            $basePrice = $item['base_price'] ?? $item['price'];
+            $finalPrice = $basePrice;
+
+            if (isset($wholesaleRules[$vid])) {
+                foreach ($wholesaleRules[$vid] as $rule) {
+                    // Jika qty memenuhi syarat minimum
+                    if ($qty >= $rule['min_unit']) {
+                        $finalPrice = (float) $rule['wholesale_price'];
+                    }
+                }
+            }
+
+            // Update harga di item
+            $item['price'] = $finalPrice;
+            
+            // Pastikan base_price tersimpan (untuk future recalculation)
+            $item['base_price'] = $basePrice;
         }
     }
 }

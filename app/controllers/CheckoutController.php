@@ -103,15 +103,15 @@ class CheckoutController extends Controller
         // ===============================
         // 🔥 DEBUG (Cek sebelum simpan)
         // ===============================
-        echo '<pre>';
-        var_dump([
-            'city'          => $city,
-            'subtotal'      => $subtotal,
-            'shippingCost'  => $shippingCost,
-            'grandTotal'    => $grandTotal,
-            'alamat'        => $alamat
-        ]);
-        exit;
+        // echo '<pre>';
+        // var_dump([
+        //     'city'          => $city,
+        //     'subtotal'      => $subtotal,
+        //     'shippingCost'  => $shippingCost,
+        //     'grandTotal'    => $grandTotal,
+        //     'alamat'        => $alamat
+        // ]);
+        // exit;
     
         // ===============================
         // SIMPAN ORDER
