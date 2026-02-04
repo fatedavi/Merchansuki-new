@@ -145,7 +145,7 @@
 
             <div class="flex justify-center lg:justify-start">
                 <img 
-                    src="/assets/images/Anya_Forger_Anime_png.png"
+                    src="/assets/images/comis134.png"
                     alt="Hero Character"
                     class="max-h-[420px] drop-shadow-2xl">
             </div>

@@ -2,16 +2,22 @@
 
 class Database
 {
-    private string $host = 'localhost';
-    private string $user = 'root';
-    private string $pass = '';
-    private string $db   = 'merchansuki';
+    private string $host;
+    private string $user;
+    private string $pass;
+    private string $db;
 
     private PDO $dbh;
     private PDOStatement $stmt;
 
     public function __construct()
     {
+        // Ambil konfigurasi dari .env
+        $this->host = $_ENV['DB_HOST'] ?? 'localhost';
+        $this->user = $_ENV['DB_USER'] ?? 'root';
+        $this->pass = $_ENV['DB_PASS'] ?? '';
+        $this->db   = $_ENV['DB_NAME'] ?? 'merchansuki';
+
         $dsn = "mysql:host={$this->host};dbname={$this->db};charset=utf8mb4";
 
         try {
